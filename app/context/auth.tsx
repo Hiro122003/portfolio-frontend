@@ -8,6 +8,7 @@ import {
   useState,
 } from "react";
 import apiClient from "../lib/apiClient";
+import { useRouter } from "next/navigation";
 
 type AuthContextType = {
   user: null | {
@@ -39,6 +40,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     username: string;
     email: string;
   }>(null);
+
+  const router = useRouter()
 
   useEffect(() => {
     const token = localStorage.getItem("auth_token");
@@ -76,6 +79,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     localStorage.removeItem("auth_token");
     delete apiClient.defaults.headers["Authorization"];
     setUser(null)
+    router.push('/auth/login')
   };
 
   const value = {

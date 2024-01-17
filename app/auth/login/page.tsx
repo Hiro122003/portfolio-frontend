@@ -3,6 +3,7 @@
 import { useAuth } from "@/app/context/auth";
 import apiClient from "@/app/lib/apiClient";
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
@@ -12,10 +13,10 @@ const Login = () => {
 
   const router = useRouter();
 
-  const {login} = useAuth()
+  const { login } = useAuth();
 
-//   ログインリクエストAPI
-  const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
+  //   ログインリクエストAPI
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // console.log(email, password);
     try {
@@ -23,10 +24,10 @@ const Login = () => {
         email,
         password,
       });
-    //   console.log(response.data.token)
-    const token = response.data.token;
-    login(token)
-    router.push('/')
+      //   console.log(response.data.token)
+      const token = response.data.token;
+      login(token);
+      router.push("/");
     } catch (error) {
       console.log("サーバーエラー");
     }
@@ -93,6 +94,14 @@ const Login = () => {
               >
                 ログイン
               </button>
+            </div>
+            <div className="mt-5">
+              <p className="text-md">
+                ユーザー登録がまだの人は
+                <Link href={'/auth/register'}>
+                  <span className="text-indigo-600">こちらから登録</span>
+                </Link>
+              </p>
             </div>
           </form>
         </div>

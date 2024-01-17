@@ -3,16 +3,33 @@
 import apiClient from "@/app/lib/apiClient";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
-import React, { FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 
 const Register = () => {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [bio, setBio] = useState<string>("");
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
 
   const router = useRouter();
 
-  const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
+  // const handleImageUpload = async(e: ChangeEvent<HTMLInputElement>) => {
+  //   if(e.target.files && e.target.files.length > 0){
+  //     const file = e.target.files[0];
+  //     const formData = new FormData();
+  //     formData.append('file',file)
+
+  //     try{
+  //       const response = await apiClient.post("/upload", formData);
+  //       setProfileImageUrl(response.data.url)
+  //     }catch(error){
+  //       console.log(error)
+  //     }
+  //   }
+  // };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // console.log(username,email,password)
     try {
@@ -21,10 +38,10 @@ const Register = () => {
         email,
         password,
       });
-    //   console.log(response.data)
-      router.push('/auth/login')
-    } catch (error) {
-      console.log(error);
+      // console.log(response.data)
+      router.push("/auth/login");
+    } catch (error: any) {
+      console.log(error?.response?.data);
     }
   };
 
@@ -44,6 +61,17 @@ const Register = () => {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form onSubmit={handleSubmit}>
+            <div>
+              {/* profileImageUrlを登録 */}
+              <label htmlFor="profileImage">プロフィール画像URL</label>
+              <input
+                id="profileImage"
+                name="profileImage"
+                type="file"
+                className="mt-1 mb-4 block  rounded-md shadow-sm py-2 px-3 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                // onChange={handleImageUpload}
+              />
+            </div>
             <div>
               <label
                 htmlFor="email"

@@ -4,6 +4,7 @@ export type UserType = {
     email: string;
     password: string;
     posts:PostType[];
+    profile: ProfileType;
 }
 
 export type PostType = {
@@ -12,4 +13,12 @@ export type PostType = {
     createdAt: string;
     authorId: number;
     author: UserType;
+}
+
+export type ProfileType = {
+    id: number;
+    bio: string;
+    profileImageUrl: string ;
+    userId: number;
+    user: UserType
 }

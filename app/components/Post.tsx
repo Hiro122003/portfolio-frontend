@@ -3,19 +3,22 @@ import { PostType } from "@/app/type";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useAuth } from "../context/auth";
 
 type PostProps = {
   post: PostType;
 };
 
 const Post = ({ post }: PostProps) => {
+  // console.log(post.author.profile.profileImageUrl)
+
   return (
     <div className="bg-white shadow-md rounded p-4 mb-4">
       <div className="mb-4">
         <div className="flex items-center mb-2">
-          <Link href="/">
+          <Link href={`/profile/${post.authorId}`}>
             <Image
-              src="/prf_1.jpg"
+              src= {post.author.profile?.profileImageUrl}
               className="rounded-full mr-2"
               alt="User Avatar"
               width={40}
